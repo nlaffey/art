@@ -11,8 +11,14 @@ const publicDomainMark = {
   definition: 'This work has been identified as being free of known restrictions under copyright law, including all related and neighboring rights.\n\nYou can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. See Other Information below.',
 }
 
+// TODO: It appears that this module is installed locally. For now I'm just going to comment this out and replace it
+// with an empty array so I can get to the accessibility fixes.
+// const importedRightsStatements = require('rightsstatements');
+
+const importedRightsStatements = [];
+
 const rightsstatements = [
-  ...require('rightsstatements').map(rs => {
+  ...importedRightsStatements.map(rs => {
     rs.definition = rs.definition
       .replace('The copyright and related rights status of this Item has not been evaluated', 'The copyright and related rights status of this Item has not been evaluated by the Minneapolis Institute of Art (Mia)')
       .replace('Please refer to the organization that has made the Item available for more information.', 'Please contact us for more information.')
@@ -46,7 +52,7 @@ const legacyToStandardizedStmt = {
   "Full Permission": "In Copyright - Non-Commercial Use Permitted",
   "Orphaned Work": "In Copyright - Rights-holder(s) Unlocatable or Unidentifiable",
   "Permission Denied": "In Copyright", // TODO what goes here? Empty in Heidi's mapping
-  "Public Domain": "Public Domain", 
+  "Public Domain": "Public Domain",
   "No Known Copyright Restrictions": "No Known Copyright",
   "Need Permission": "Copyright Not Evaluated",
 }
@@ -97,10 +103,10 @@ function RightsStatementIcon({statement, color, style, ...props}) {
   if(!statement) return <span />
 
   var shortId = statement.identifier.split('-')[0]
-  var iconURL = statement.identifier === 'CC-PDM' ? 
+  var iconURL = statement.identifier === 'CC-PDM' ?
     `https://upload.wikimedia.org/wikipedia/commons/a/af/Cc-public_domain_mark.svg`
     : `https://rightsstatements.org/files/icons/${shortId}.Icon-Only.${color || 'white'}.svg`
-  var fullIconURL = statement.identifier === 'CC-PDM' ? 
+  var fullIconURL = statement.identifier === 'CC-PDM' ?
     `https://upload.wikimedia.org/wikipedia/commons/a/af/Cc-public_domain_mark.svg`
     : `https://rightsstatements.org/files/buttons/${statement.identifier}.${color || 'white'}.svg`
 
